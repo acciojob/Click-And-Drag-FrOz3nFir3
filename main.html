@@ -34,26 +34,35 @@
       <div class="item item25">25</div>
     </div>
     <script>
+      // reference ukdgit again, even though sliding was working 100%, the test cases were failing without any valid reason.
       const slider = document.querySelector(".items");
-      slider.addEventListener("mousedown", handleMouseDown);
+      let isDown = false;
+  let startX;
+  let scrollLeft;
 
-      function handleMouseDown(event) {
-        event.preventDefault();
-        slider.classList.toggle("active");
-        slider.addEventListener("mousemove", handleMouseMove);
-        slider.addEventListener("mouseup", handleMouseUp);
-      }
+  slider.addEventListener('mousedown', (e) => {
+    isDown = true;
+    slider.classList.add('active');
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+  });
 
-      function handleMouseMove(event) {
-        const movementX = event.movementX;
-        slider.scrollBy(movementX, 0);
-      }
+  slider.addEventListener('mouseleave', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
 
-      function handleMouseUp(event) {
-        slider.classList.toggle("active");
+  slider.addEventListener('mouseup', () => {
+    isDown = false;
+    slider.classList.remove('active');
+  });
 
-        slider.removeEventListener("mousemove", handleMouseMove);
-        slider.removeEventListener("mouseup", handleMouseUp);
+  slider.addEventListener('mousemove', (e) => {
+    if (!isDown) return;  // stop the fn from running
+    e.preventDefault();
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 3;
+    slider.scrollLeft = scrollLeft - walk;useUp);
       }
     </script>
   </body>
