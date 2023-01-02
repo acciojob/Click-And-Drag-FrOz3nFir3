@@ -39,6 +39,7 @@
 
       function handleMouseDown(event) {
         event.preventDefault();
+        slider.classList.toggle("active");
         slider.addEventListener("mousemove", handleMouseMove);
         slider.addEventListener("mouseup", handleMouseUp);
       }
@@ -49,6 +50,8 @@
       }
 
       function handleMouseUp(event) {
+        slider.classList.toggle("active");
+
         slider.removeEventListener("mousemove", handleMouseMove);
         slider.removeEventListener("mouseup", handleMouseUp);
       }
